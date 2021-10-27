@@ -33,6 +33,12 @@ $(document).ready(function () {
         $("#content-purchases").show();
     })
 
+    $("#nav-buy").click(function () {
+        resolveClientChoice();
+        resolveItemSelect();
+        $("#content-buy").show();
+    })
+
 });
 
 function getClients() {
@@ -126,4 +132,73 @@ function resolveClientName(client) {
     } else {
         return client.firstName + " " + client.lastName;
     }
+}
+
+
+function resolveClientChoice() {
+
+    $("#client-select").empty();
+
+    const endpoint = `http://${HOST}:${PORT}${API}${ENPOINT_CLIENTS}`;
+
+    $.ajax({
+        "type": "GET",
+        "url": endpoint,
+        "success": function (response) {
+            $.each(response, function (i, client) {
+                $("#client-select").append(`<option value="${client.id}">${resolveClientName(client)}</option>`);
+            });
+        }
+    })
+
+}
+
+function resolveItemSelect() {
+
+    const endpoint = `http://${HOST}:${PORT}${API}${ENPOINT_ITEMS}`;
+
+    $.ajax({
+        "type": "GET",
+        "url": endpoint,
+        "success": function (response) {
+            $.each(response, function (i, item) {
+
+                var checkboxInputOption =
+                    `<input type="checkbox" id="item-checkbox-${i}" class="item-choice" value="${item.id}">
+                <label >${item.name}</label>
+                <span>for</span>
+                <label for="item-checkbox-${i}" class="item-price" value="${item.price}">${item.price}</label></br>`
+
+                $("#checkbox-select").append(checkboxInputOption);
+            });
+        }
+    })
+
+}
+
+function getTotalPrice() {
+    var selectedBoxes = $("#checkbox-select > input:checked");
+
+    var selectedItemIds = $.map(selectedBoxes, function (obj, i) {
+        return obj.value;
+    });
+
+    var selectedCheckbox = $.map(selectedBoxes, function (obj, i) {
+        return obj.id;
+    });
+
+    $('.item-choice').on('click', function () {
+        var checkedBoxes = $('input:checked')
+
+        var individualSums = $.map(checkedBoxes, function (obj, i) {
+            var checkboxId = obj.id;
+            var numberValue = $("label[for=" + checkboxId + "]").attr("value");
+            return parseFloat(numberValue);
+        });
+
+        var tatalSum = 0
+        $.each(individualSums, function () { sum += parseFloat(this) || 0; });
+        console.log(tatalSum);
+    })
+
 }
