@@ -39,7 +39,9 @@ $(document).ready(function () {
         $("#content-buy").show();
     })
 
-
+    $("#purchase-button").click(function () {
+        makeNewPurchase();
+    });
 
 });
 
@@ -198,6 +200,34 @@ function calculateTotal() {
     $.each(individualSums, function () { tatalSum += parseFloat(this) || 0; });
 
     $('#total-price').text(tatalSum.toFixed(2));
+}
+
+function makeNewPurchase() {
+    var selectedBoxes = $("#checkbox-select > input:checked")
+    var selectedItemIds = $.map(selectedBoxes, function (obj, i) {
+        return obj.value;
+    });
+
+    var totalMoneyAmount = $('#total-price').text();
+
+    var clientId = $('#client-select').find(":selected").val();
+
+    const endpoint = `http://${HOST}:${PORT}${API}${ENPOINT_PURCHASES}`;
+
+    $.ajax({
+        "url": endpoint,
+        "method": "POST",
+        "dataType": 'json',
+        "contentType": "application/json; charset=utf-8",
+        "data": JSON.stringify({
+            "totalPayedAmount": totalMoneyAmount,
+            "clientId": clientId,
+            "purchaseTime": new Date(Date.now()).toISOString(),
+            "itemIds": selectedItemIds
+        }),
+        "success": function (response) {
+        }
+    })
 }
 
 // var selectedItemIds = $.map(selectedBoxes, function (obj, i) {
