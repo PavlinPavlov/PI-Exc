@@ -39,6 +39,8 @@ $(document).ready(function () {
         $("#content-buy").show();
     })
 
+
+
 });
 
 function getClients() {
@@ -155,6 +157,8 @@ function resolveClientChoice() {
 
 function resolveItemSelect() {
 
+    $("#checkbox-select").empty();
+
     const endpoint = `http://${HOST}:${PORT}${API}${ENPOINT_ITEMS}`;
 
     $.ajax({
@@ -171,34 +175,37 @@ function resolveItemSelect() {
 
                 $("#checkbox-select").append(checkboxInputOption);
             });
+
+            $('.item-choice').click(function () {
+                calculateTotal();
+            })
         }
     })
 
 }
 
-function getTotalPrice() {
-    var selectedBoxes = $("#checkbox-select > input:checked");
+function calculateTotal() {
+    var checkedBoxes = $('input:checked')
 
-    var selectedItemIds = $.map(selectedBoxes, function (obj, i) {
-        return obj.value;
+
+    var individualSums = $.map(checkedBoxes, function (obj, i) {
+        var checkboxId = obj.id;
+        var numberValue = $("label[for=" + checkboxId + "]").attr("value");
+        return parseFloat(numberValue);
     });
 
-    var selectedCheckbox = $.map(selectedBoxes, function (obj, i) {
-        return obj.id;
-    });
+    var tatalSum = 0
+    $.each(individualSums, function () { tatalSum += parseFloat(this) || 0; });
 
-    $('.item-choice').on('click', function () {
-        var checkedBoxes = $('input:checked')
-
-        var individualSums = $.map(checkedBoxes, function (obj, i) {
-            var checkboxId = obj.id;
-            var numberValue = $("label[for=" + checkboxId + "]").attr("value");
-            return parseFloat(numberValue);
-        });
-
-        var tatalSum = 0
-        $.each(individualSums, function () { sum += parseFloat(this) || 0; });
-        console.log(tatalSum);
-    })
-
+    $('#total-price').text(tatalSum.toFixed(2));
 }
+
+// var selectedItemIds = $.map(selectedBoxes, function (obj, i) {
+//     return obj.value;
+// });
+
+// var selectedCheckbox = $.map(selectedBoxes, function (obj, i) {
+//     return obj.id;
+// });
+
+// var selectedBoxes = $("#checkbox-select > input:checked");
