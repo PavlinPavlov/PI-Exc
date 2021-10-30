@@ -154,7 +154,6 @@ function resolveClientChoice() {
             });
         }
     })
-
 }
 
 function resolveItemSelect() {
@@ -192,7 +191,6 @@ function resolveItemSelect() {
 function calculateTotal() {
     var checkedBoxes = $('input:checked')
 
-
     var individualSums = $.map(checkedBoxes, function (obj, i) {
         var checkboxId = obj.id;
         var numberValue = $("label[for=" + checkboxId + "]").attr("value");
@@ -215,6 +213,9 @@ function makeNewPurchase() {
 
     var clientId = $('#client-select').find(":selected").val();
 
+    console.log(selectedItemIds);
+    console.log(selectedBoxes);
+
     const endpoint = `http://${HOST}:${PORT}${API}${ENPOINT_PURCHASES}`;
 
     $.ajax({
@@ -229,16 +230,9 @@ function makeNewPurchase() {
             "itemIds": selectedItemIds
         }),
         "success": function (response) {
+
+            console.log(selectedItemIds);
+            console.log(selectedBoxes);
         }
     })
 }
-
-// var selectedItemIds = $.map(selectedBoxes, function (obj, i) {
-//     return obj.value;
-// });
-
-// var selectedCheckbox = $.map(selectedBoxes, function (obj, i) {
-//     return obj.id;
-// });
-
-// var selectedBoxes = $("#checkbox-select > input:checked");

@@ -87,11 +87,6 @@ th, td {
   margin-bottom: 12px;
   cursor: pointer;
   font-size: 22px;
-  width: 25%;
-  /* -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none; */
 }
 
 .container input {
@@ -101,6 +96,7 @@ th, td {
   height: 0;
   width: 0;
 }
+
 
 .checkmark {
   position: absolute;
@@ -154,10 +150,9 @@ select {
 }
 
 .select {
-  position: relative;
   display: block;
-  width: 15em;
-  height: 2em;
+  width: 175px;
+  height: 35px;
   line-height: 3;
   overflow: hidden;
   border-radius: .25em;
@@ -176,4 +171,20 @@ select {
   margin: 4px 2px;
   cursor: pointer;
   border-radius: 8px;
+}
+
+#form-client {
+  width: 25%;
+  float: left;
+}
+
+#form-items {
+  width: 60%;
+  float: left;
+}
+
+div.info {
+  color: #333;
+  font-size: 35px;
+  margin-bottom: 20px;
 }
