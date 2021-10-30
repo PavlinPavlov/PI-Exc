@@ -60,6 +60,14 @@ function getClients() {
     })
 }
 
+function resolveClientName(client) {
+    if (client.organization) {
+        return client.organizationName;
+    } else {
+        return client.firstName + " " + client.lastName;
+    }
+}
+
 function createClientTable(client) {
     var clientName = resolveClientName(client)
 
@@ -130,15 +138,6 @@ function createPurchaseTable(purchase) {
                 </tr>`;
 }
 
-function resolveClientName(client) {
-    if (client.organization) {
-        return client.organizationName;
-    } else {
-        return client.firstName + " " + client.lastName;
-    }
-}
-
-
 function resolveClientChoice() {
 
     $("#client-select").empty();
@@ -169,12 +168,12 @@ function resolveItemSelect() {
             $.each(response, function (i, item) {
 
                 var checkboxInputOption =
-                    `<label class="container">
+                    `<label class="item-checkbox">
                         <label>${item.name}</label>
                         <span>for</span>
                         <label for="item-checkbox-${i}" class="item-price" value="${item.price}">${item.price}</label>
                         <input type="checkbox" id="item-checkbox-${i}" class="item-choice" value="${item.id}">
-                        <span class="checkmark"></span>
+                        <span class="checkmark" isChecked="false"></span>
                     </label>`
 
                 $("#checkbox-select").append(checkboxInputOption);
@@ -189,7 +188,7 @@ function resolveItemSelect() {
 }
 
 function calculateTotal() {
-    var checkedBoxes = $('input:checked')
+    var checkedBoxes = $('input:checked');
 
     var individualSums = $.map(checkedBoxes, function (obj, i) {
         var checkboxId = obj.id;
@@ -204,17 +203,12 @@ function calculateTotal() {
 }
 
 function makeNewPurchase() {
-    var selectedBoxes = $("#checkbox-select > input:checked")
-    var selectedItemIds = $.map(selectedBoxes, function (obj, i) {
+    var totalMoneyAmount = $('#total-price').text();
+    var clientId = $('#client-select').find(":selected").val();
+    var checkedBoxes = $('input:checked');
+    var selectedItemIds = $.map(checkedBoxes, function (obj, i) {
         return obj.value;
     });
-
-    var totalMoneyAmount = $('#total-price').text();
-
-    var clientId = $('#client-select').find(":selected").val();
-
-    console.log(selectedItemIds);
-    console.log(selectedBoxes);
 
     const endpoint = `http://${HOST}:${PORT}${API}${ENPOINT_PURCHASES}`;
 
@@ -230,9 +224,9 @@ function makeNewPurchase() {
             "itemIds": selectedItemIds
         }),
         "success": function (response) {
-
             console.log(selectedItemIds);
-            console.log(selectedBoxes);
+            console.log(totalMoneyAmount);
+            console.log(clientId);
         }
     })
 }
