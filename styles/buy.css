@@ -1,4 +1,20 @@
-.item-checkbox {
+#form-client {
+  width: 25%;
+  float: left;
+}
+
+#form-items {
+  width: 60%;
+  float: left;
+}
+
+div.info {
+  color: #333;
+  font-size: 35px;
+  margin-bottom: 20px;
+}
+
+.item-checkbox-container {
     display: block;
     position: relative;
     padding-left: 35px;
@@ -7,8 +23,7 @@
     font-size: 22px;
   }
   
-  /* Hide the browser's default checkbox */
-  .item-checkbox input {
+  .item-checkbox-container input {
     position: absolute;
     opacity: 0;
     cursor: pointer;
@@ -25,28 +40,25 @@
     background-color: #eee;
   }
   
-  /* On mouse-over, add a grey background color */
-  .item-checkbox:hover input ~ .checkmark {
+  .item-checkbox-container:hover input ~ .checkmark {
     background-color: #ccc;
   }
   
-  /* When the checkbox is checked, add a blue background */
-  .item-checkbox input:checked ~ .checkmark {
+  .item-checkbox-container input:checked ~ .checkmark {
     background-color: #333;
   }
   
-  /* Create the checkmark/indicator (hidden when not checked) */
   .checkmark:after {
-    content: ".";
+    content: "";
     position: absolute;
     display: none;
   }
   
-  .item-checkbox input:checked ~ .checkmark:after {
+  .item-checkbox-container input:checked ~ .checkmark:after {
     display: block;
   }
   
-  .item-checkbox .checkmark:after {
+  .item-checkbox-container .checkmark:after {
     left: 9px;
     top: 5px;
     width: 5px;
@@ -80,6 +92,7 @@
     padding-bottom: 10px;
   }
   
+  
   #purchase-button {
     background-color: #333;
     border: none;
@@ -92,20 +105,4 @@
     margin: 4px 2px;
     cursor: pointer;
     border-radius: 8px;
-  }
-  
-  #form-client {
-    width: 25%;
-    float: left;
-  }
-  
-  #form-items {
-    width: 60%;
-    float: left;
-  }
-  
-  div.info {
-    color: #333;
-    font-size: 35px;
-    margin-bottom: 20px;
   }

@@ -44,12 +44,12 @@ function resolveItemSelect() {
             $.each(response, function (i, item) {
 
                 var checkboxInputOption =
-                    `<label class="item-checkbox">
+                    `<label class="item-checkbox-container">
                         <label>${item.name}</label>
                         <span>for</span>
                         <label for="item-checkbox-${i}" class="item-price" value="${item.price}">${item.price}</label>
                         <input type="checkbox" id="item-checkbox-${i}" class="item-choice" value="${item.id}">
-                        <span class="checkmark" isChecked="false"></span>
+                        <span class="checkmark"></span>
                     </label>`
 
                 $("#checkbox-select").append(checkboxInputOption);
