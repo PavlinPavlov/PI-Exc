@@ -45,9 +45,9 @@ function resolveItemSelect() {
 
                 var checkboxInputOption =
                     `<label class="item-checkbox-container">
-                        <label>${item.name}</label>
-                        <span>for</span>
+                        <label>${item.name} for </label>
                         <label for="item-checkbox-${i}" class="item-price" value="${item.price}">${item.price}</label>
+
                         <input type="checkbox" id="item-checkbox-${i}" class="item-choice" value="${item.id}">
                         <span class="checkmark"></span>
                     </label>`
@@ -85,10 +85,6 @@ function makeNewPurchase() {
     var selectedItemIds = $.map(checkedBoxes, function (obj, i) {
         return obj.value;
     });
-
-    console.log(selectedItemIds);
-    console.log(totalMoneyAmount);
-    console.log(clientId);
 
     const endpoint = `http://${HOST}:${PORT}${API}${ENPOINT_PURCHASES}`;
 
